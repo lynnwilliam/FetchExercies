@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">FetchExercies</string>
+
+    <string name="fetchloading">Loading Data...</string>
+
+    <string name="fetchtitle">Database Entries</string>
+    <string name="fetchsuccessbutton">Reload Data</string>
+
+    <string name="fetcherror">Oops Something Went Wrong</string>
+    <string name="fetcherrorbutton">Retry</string>
+
+    <string name="header_listid">List ID</string>
+    <string name="header_name">Name</string>
+    <string name="header_id">ID</string>
+</resources>
