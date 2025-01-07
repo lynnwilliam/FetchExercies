@@ -4,6 +4,7 @@ import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.mocks.FetchMockBadAPICall
 import com.fetch.lynnwilliam.mocks.FetchMockOKAPICall
 import com.fetch.lynnwilliam.ui.FetchState
+import com.fetch.lynnwilliam.viewmodels.ListScreenViewModel
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,18 +1,22 @@
-package com.fetch.lynnwilliam
+package com.fetch.lynnwilliam.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.fetch.lynnwilliam.BuildConfig
 import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.ui.FetchState
 import com.fetch.lynnwilliam.webapi.FetchAPICall
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListScreenViewModel(
-    val fetchRecordsUseCase: FetchRecordsUseCase = FetchRecordsUseCase(FetchAPICall()),
+@HiltViewModel
+class ListScreenViewModel @Inject constructor(
+    private val fetchRecordsUseCase: FetchRecordsUseCase
 ) : ViewModel() {
 
     private val _records = MutableStateFlow<FetchState>(FetchState.LoadingData)
