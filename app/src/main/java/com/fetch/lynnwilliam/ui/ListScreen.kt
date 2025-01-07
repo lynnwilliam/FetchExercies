@@ -1,4 +1,4 @@
-package com.fetch.lynnwilliam
+package com.fetch.lynnwilliam.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,20 +14,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.fetch.lynnwilliam.ListScreenViewModel
+import com.fetch.lynnwilliam.ListScreenViewModelFactory
+import com.fetch.lynnwilliam.R
+import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.data.Record
-import com.fetch.lynnwilliam.ui.BlinkingTextRow
-import com.fetch.lynnwilliam.ui.PrimaryButton
-import com.fetch.lynnwilliam.ui.RecordItem
-import com.fetch.lynnwilliam.ui.TitleText
-import com.fetch.lynnwilliam.webapi.FetchMockOKAPICall
+import com.fetch.lynnwilliam.mocks.FetchMockBadAPICall
+import com.fetch.lynnwilliam.mocks.FetchMockOKAPICall
 import kotlinx.coroutines.launch
 
 @Composable
 fun ListScreen(viewModel: ListScreenViewModel){
-
-    LaunchedEffect(true) {
-        viewModel.fetchRecords()
-    }
 
     Column( modifier = Modifier.fillMaxSize()){
         Row(
@@ -126,36 +123,25 @@ fun DisplayData(viewModel: ListScreenViewModel, data: List<Record>){
     }
 }
 
-
 /*
     Personally I love Previews, and use them all the time
  */
-
 @Preview
 @Composable
 fun PreviewListScreen(){
-    val fakeRepo = FetchMockOKAPICall()
-    ListScreen(
-        ListScreenViewModel(
-            initialState = FetchState.DataFetched(fakeRepo.getDummyData()))
-        )
+    val fetchRecordsUseCase = FetchRecordsUseCase(FetchMockOKAPICall())
+    val viewModelFactory = ListScreenViewModelFactory(fetchRecordsUseCase)
+    val viewModel = viewModelFactory.create(ListScreenViewModel::class.java)
+    ListScreen(viewModel)
 }
 
 @Preview
 @Composable
 fun PreviewErrorListScreen(){
-    ListScreen(
-        ListScreenViewModel(
-            initialState = FetchState.Error("Network Error"))
-    )
-}
 
-@Preview
-@Composable
-fun PreviewLoadingListScreen(){
-    ListScreen(
-        ListScreenViewModel(
-            initialState = FetchState.LoadingData)
-    )
+    val fetchRecordsUseCase = FetchRecordsUseCase(FetchMockBadAPICall())
+    val viewModelFactory = ListScreenViewModelFactory(fetchRecordsUseCase)
+    val viewModel = viewModelFactory.create(ListScreenViewModel::class.java)
+    ListScreen(viewModel)
 }
 

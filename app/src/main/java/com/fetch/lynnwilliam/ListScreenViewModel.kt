@@ -1,32 +1,41 @@
 package com.fetch.lynnwilliam
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.fetch.lynnwilliam.data.FetchRecordsUseCase
+import com.fetch.lynnwilliam.ui.FetchState
 import com.fetch.lynnwilliam.webapi.FetchAPICall
-import com.fetch.lynnwilliam.webapi.RecordsRepository
-import com.fetch.lynnwilliam.webapi.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-open class ListScreenViewModel(
-    private val recordsRepo: RecordsRepository = FetchAPICall(),
-    val initialState: FetchState = FetchState.LoadingData
-): ViewModel() {
+class ListScreenViewModel(
+    val fetchRecordsUseCase: FetchRecordsUseCase = FetchRecordsUseCase(FetchAPICall()),
+) : ViewModel() {
 
-    //MutableStateFlow for thread safe network operations,
-    val _records = MutableStateFlow<FetchState>(initialState)
+    private val _records = MutableStateFlow<FetchState>(FetchState.LoadingData)
     val records: StateFlow<FetchState> = _records.asStateFlow()
 
-    open fun fetchRecords(){
+    init {
+        fetchRecords()
+    }
+
+    fun fetchRecords() {
         viewModelScope.launch {
-            val fetchResponse = recordsRepo.fetchRecords(BuildConfig.FETCH_URL)
-           if ( fetchResponse is Response.Success){
-               _records.value = FetchState.DataFetched(fetchResponse.data)
-           } else if ( fetchResponse is Response.Error){
-               _records.value = FetchState.Error(fetchResponse.exception.toString())
-           }
+            _records.value = FetchState.LoadingData
+            _records.value = fetchRecordsUseCase(BuildConfig.FETCH_URL)
         }
+    }
+}
+
+class ListScreenViewModelFactory(private val fetchRecordsUseCase: FetchRecordsUseCase) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ListScreenViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ListScreenViewModel(fetchRecordsUseCase) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

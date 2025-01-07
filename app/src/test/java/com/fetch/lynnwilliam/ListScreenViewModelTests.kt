@@ -1,10 +1,10 @@
 package com.fetch.lynnwilliam
 
-import com.fetch.lynnwilliam.webapi.FetchMockBadAPICall
-import com.fetch.lynnwilliam.webapi.FetchMockOKAPICall
-import com.fetch.lynnwilliam.webapi.RecordsRepository
+import com.fetch.lynnwilliam.data.FetchRecordsUseCase
+import com.fetch.lynnwilliam.mocks.FetchMockBadAPICall
+import com.fetch.lynnwilliam.mocks.FetchMockOKAPICall
+import com.fetch.lynnwilliam.ui.FetchState
 import junit.framework.TestCase.assertTrue
-import junit.framework.TestCase.fail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -16,8 +16,6 @@ class ListScreenViewModelTests {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = StandardTestDispatcher()
-    private lateinit var repository: RecordsRepository
-    private lateinit var viewModel: ListScreenViewModel
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
@@ -30,29 +28,20 @@ class ListScreenViewModelTests {
     fun tearDown() {
         Dispatchers.resetMain()
     }
-
     @Test
     fun testViewModelDataLoading() = runTest {
-
-        repository = FetchMockOKAPICall()
-        viewModel = ListScreenViewModel(repository)
+        val viewModel = ListScreenViewModel(fetchRecordsUseCase = FetchRecordsUseCase(FetchMockOKAPICall()))
         viewModel.fetchRecords()
         advanceUntilIdle()
-        val state = viewModel.records.value
-        if (state is FetchState.DataFetched) {
-            assertTrue("Data should not be empty", state.list.isNotEmpty())
-        } else {
-            fail("Expected DataFetched state was not reached")
-        }
+        assertTrue("Data should not be empty", (viewModel.records.value as? FetchState.DataFetched)?.list?.isNotEmpty() ?: false)
     }
 
     @Test
-    fun testShouldFailGraceFullyWhenUsingRealAPICallWithError() = runTest {
-
-        viewModel = ListScreenViewModel(FetchMockBadAPICall())
+    fun testShouldFailGracefullyWhenUsingRealAPICallWithError() = runTest {
+        val viewModel = ListScreenViewModel(fetchRecordsUseCase = FetchRecordsUseCase(FetchMockBadAPICall()))
         viewModel.fetchRecords()
         advanceUntilIdle()
-        val state = viewModel.records.value
-        assertTrue("state should be FetchState.Error but is ${state.javaClass.canonicalName} ", state is FetchState.Error)
+        assertTrue("State should be FetchState.Error", viewModel.records.value is FetchState.Error)
     }
+
 }
