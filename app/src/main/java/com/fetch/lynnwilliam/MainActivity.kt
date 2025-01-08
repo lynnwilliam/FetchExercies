@@ -8,18 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.ui.ListScreen
 import com.fetch.lynnwilliam.ui.theme.FetchExercisesTheme
-import com.fetch.lynnwilliam.webapi.FetchAPICall
+import com.fetch.lynnwilliam.viewmodels.ListScreenViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val fetchRecordsUseCase = FetchRecordsUseCase(FetchAPICall())
-        val viewModelFactory = ListScreenViewModelFactory(fetchRecordsUseCase)
+        val listScreenViewModel: ListScreenViewModel by viewModels()
 
         setContent {
             FetchExercisesTheme {
@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val listScreenViewModel: ListScreenViewModel by viewModels { viewModelFactory }
                     ListScreen(listScreenViewModel)
                 }
             }

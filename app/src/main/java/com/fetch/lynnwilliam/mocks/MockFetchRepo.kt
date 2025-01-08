@@ -1,9 +1,12 @@
 package com.fetch.lynnwilliam.mocks
 
+import androidx.lifecycle.ViewModel
 import com.fetch.lynnwilliam.businessrules.BusinessRules
 import com.fetch.lynnwilliam.data.Record
 import com.fetch.lynnwilliam.webapi.RecordsRepository
 import com.fetch.lynnwilliam.webapi.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 class FetchMockOKAPICall: RecordsRepository {
 
@@ -26,3 +29,10 @@ class FetchMockBadAPICall: RecordsRepository {
         return Response.Error(Exception("dummy error"))
     }
 }
+
+//@HiltViewModel
+//class FakeMainViewModel @Inject constructor(
+//    repository: FetchMockOKAPICall
+//) : ViewModel() {
+//
+//}

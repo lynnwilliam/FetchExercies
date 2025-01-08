@@ -14,8 +14,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.fetch.lynnwilliam.ListScreenViewModel
-import com.fetch.lynnwilliam.ListScreenViewModelFactory
+import com.fetch.lynnwilliam.viewmodels.ListScreenViewModel
+import com.fetch.lynnwilliam.viewmodels.ListScreenViewModelFactory
 import com.fetch.lynnwilliam.R
 import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.data.Record

@@ -1,23 +1,37 @@
 buildscript {
     ext {
-        compose_ui_version = '1.3.1'
-        kotlinserialization_version = '1.4.0'
-        okhttp_version = '4.9.0'
-        ktxcore = "1.7.0"
-        ktx_runtime = "1.6.1"
-        compose_version = "1.3.0"
-        material_version = "1.3.0"
+        compose_ui_version = '1.7.6'
+        kotlin_version = '1.8.0'
+        okhttp_version = '4.12.0'
+        ktxcore = '1.15.0'
+        ktx_runtime = "2.7.0"
+        compose_version = '1.9.3'
+        material_version = '1.7.6'
         junit_version = "4.13.2"
-        junit_espresso = "1.1.3"
-        expresso_core = "3.3.0"
-        cocoutines_version = "1.6.1"
-        livedata_version = "1.0.0"
-        viewmodel_version = "2.4.0"
+        junit_espresso = '1.2.1'
+        expresso_core = '3.6.1'
+        cocoutines_version = '1.10.1'
+        livedata_version = '1.7.6'
+        viewmodel_version = '2.8.7'
+        gradle_version = "8.7.3" //was 7.4.1
+        hilt_version = '2.38.1'
     }
-}// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+    repositories {
+        google()  // Ensure this is included
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradle_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21" //2.0.21        was 1.7.0
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '7.4.1' apply false
-    id 'com.android.library' version '7.4.1' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.0' apply false
+    id 'com.android.application' version '8.7.3' apply false
+    id 'com.android.library' version '8.7.3' apply false
+    id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
+    id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version" apply false
 }
