@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.fetch.lynnwilliam.BuildConfig
 import com.fetch.lynnwilliam.data.FetchRecordsUseCase
 import com.fetch.lynnwilliam.ui.FetchState
-import com.fetch.lynnwilliam.webapi.FetchAPICall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

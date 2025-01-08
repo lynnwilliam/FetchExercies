@@ -2,8 +2,9 @@ package com.fetch.lynnwilliam
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.testing.HiltAndroidTest
 
-@HiltAndroidApp
+@HiltAndroidTest
 class TestApplication : Application() {
 
 }

@@ -14,6 +14,7 @@ buildscript {
         livedata_version = '1.7.6'
         viewmodel_version = '2.8.7'
         gradle_version = "8.7.3" //was 7.4.1
+        hilt_version = '2.38.1'
     }
 
     repositories {
@@ -23,7 +24,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21" //2.0.21        was 1.7.0
-        classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
 
